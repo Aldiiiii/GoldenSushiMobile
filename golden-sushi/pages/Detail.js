@@ -1,19 +1,40 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, Image, Dimensions } from "react-native"
 
-export default function Detail(){
+export default function Detail({item}){
     return (
         <>
             <View style={style.container}>
-                <Text>Detail</Text>
+                <Image 
+                    style={style.img}
+                    source={{uri: "https://img.freepik.com/premium-vector/cartoon-drawing-sushi-wooden-tray_410516-82612.jpg"}}
+                />
+                <Text style={{
+                    fontSize: 25,
+                    fontWeight: "bold"
+                }}>Judul Makanannya</Text>
+                <Text style={{
+                    padding: 18,
+                    textAlign: "center",
+                    width: 300,
+                    fontWeight: 500
+                }}>Ini description makanan, misalnya: Nasi + Tuna + Onigiri + Tamago</Text>
             </View>
         </>
     )
 }
 
-const style = StyleSheet.create({
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const style = StyleSheet.create({    
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "red",
+    },
+    img: {
+        width: 350,
+        margin: 15,
+        height: windowHeight * 1/3       
     }
 })
