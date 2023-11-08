@@ -23,9 +23,9 @@ Target:
 - [x] Mencoba useState, useEffect dalam react-native
 - [x] Hit API server yang sudah dibuat untuk mendapatkan data
 - [x] Mengetahui bahwa redux & redux-thunk bisa diimplementasi di react-native
-- [ ] Memahami `react-native-navigation`
-- [ ] Memahami Stack Navigation & Tab Navigation
-- [ ] Membuat min 2 Screen (Home, Detail)
+- [x] Memahami `react-native-navigation`
+- [x] Memahami Stack Navigation & Tab Navigation
+- [x] Membuat min 2 Screen (Home, Detail)
 
 **Report:**
 
