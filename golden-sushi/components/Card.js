@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Card() {
+export default function Card({item}) {
     const navigation = useNavigation()
   return (
     <>
@@ -11,12 +11,12 @@ export default function Card() {
           <Image
             style={style.cardImage}
             source={{
-              uri: "https://img.freepik.com/premium-vector/cartoon-drawing-sushi-wooden-tray_410516-82612.jpg",
+              uri: item.imgUrl,
             }}
           />
           <View style={style.cardText}>
-              <Text style={{fontWeight: "500"}}>Sushi</Text>
-              <Text style={{fontWeight: "500", color: "red"}}>Rp.123.000</Text>
+              <Text style={{fontWeight: "500"}}>{item.name}</Text>
+              <Text style={{fontWeight: "500", color: "red"}}>Rp.{item.price}</Text>
           </View>
         </View>
       </View>
