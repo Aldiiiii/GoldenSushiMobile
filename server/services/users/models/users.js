@@ -48,8 +48,21 @@ class User {
 
   static async findOne(id) {
     try {
-        const findUser = await this.connectDb().findOne({_id: new ObjectId(id)})
-        return findUser
+      const findUser = await this.connectDb().findOne({
+        _id: new ObjectId(id),
+      });
+      return findUser;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async destroy(id) {
+    try {
+      const deleteUser = await this.connectDb().deleteOne({
+        _id: new ObjectId(id),
+      });
+      return deleteUser;
     } catch (error) {
       throw error;
     }
