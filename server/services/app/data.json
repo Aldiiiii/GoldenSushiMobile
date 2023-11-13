@@ -17,7 +17,7 @@
             "description": "This is Aburi Gyuniku",
             "price": 123000,
             "imgUrl": "https://media.timeout.com/images/105980851/750/422/image.jpg",
-            "authorId": 1,
+            "authorId": "654cb498e1462ff91eefa9b7",
             "categoryId": 5,
             "createdAt": "date",
             "updatedAt": "date"
@@ -28,7 +28,7 @@
             "description": "This is Baby Octopus",
             "price": 123000,
             "imgUrl": "https://media.timeout.com/images/105980851/750/422/image.jpg",
-            "authorId": 1,
+            "authorId": "654cb498e1462ff91eefa9b7",
             "categoryId": 1,
             "createdAt": "date",
             "updatedAt": "date"
@@ -39,7 +39,7 @@
             "description": "This is Egg Sashimi",
             "price": 123000,
             "imgUrl": "https://media.timeout.com/images/105980851/750/422/image.jpg",
-            "authorId": 1,
+            "authorId": "654cb498e1462ff91eefa9b7",
             "categoryId": 2,
             "createdAt": "date",
             "updatedAt": "date"
@@ -50,7 +50,7 @@
             "description": "This is Baby Octopus Gunkan",
             "price": 123000,
             "imgUrl": "https://media.timeout.com/images/105980851/750/422/image.jpg",
-            "authorId": 1,
+            "authorId": "654cb498e1462ff91eefa9b7",
             "categoryId": 3,
             "createdAt": "date",
             "updatedAt": "date"
@@ -61,7 +61,7 @@
             "description": "This is Beef Cheese Roll",
             "price": 123000,
             "imgUrl": "https://media.timeout.com/images/105980851/750/422/image.jpg",
-            "authorId": 1,
+            "authorId": "654cb498e1462ff91eefa9b7",
             "categoryId": 4,
             "createdAt": "date",
             "updatedAt": "date"
@@ -72,7 +72,7 @@
             "description": "This is Beef Yakiniku Bowl",
             "price": 123000,
             "imgUrl": "https://media.timeout.com/images/105980851/750/422/image.jpg",
-            "authorId": 1,
+            "authorId": "654cb498e1462ff91eefa9b7",
             "categoryId": 6,
             "createdAt": "date",
             "updatedAt": "date"

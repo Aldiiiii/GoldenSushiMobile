@@ -6,11 +6,11 @@ const router = express.Router()
 router.post('/register', AdminController.register)
 router.post('/login', AdminController.login)
 
-router.use(authentication)
+// router.use(authentication)
 
 router.get('/items', AdminController.items)
 router.post('/items', AdminController.add)
-router.put('/items', AdminController.edit)
+router.put('/items/:id', AdminController.edit)
 router.delete('/items', AdminController.delete)
 router.get('/items/:id', AdminController.itemById)
 router.get('/categories', AdminController.categories)

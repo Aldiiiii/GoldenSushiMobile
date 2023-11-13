@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Item.belongsTo(models.User, {foreignKey: 'authorId'})
+      // Item.belongsTo(models.User, {foreignKey: 'authorId'})
       Item.belongsTo(models.Category, {foreignKey: 'categoryId'})
       Item.hasMany(models.Ingredients, {foreignKey: 'itemId'})
     }
@@ -70,12 +70,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     authorId: {
       type: DataTypes.INTEGER,
-      references: {
-        model: "Users",
-        key: "id"
-      },
-      onDelete: "cascade",
-      onUpdate: "cascade"
+      // references: {
+      //   model: "Users",
+      //   key: "id"
+      // },
+      // onDelete: "cascade",
+      // onUpdate: "cascade"
     },
     categoryId: {
       type: DataTypes.INTEGER,

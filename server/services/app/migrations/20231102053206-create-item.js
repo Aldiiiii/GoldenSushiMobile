@@ -62,13 +62,13 @@ module.exports = {
         }
       },
       authorId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Users",
-          key: "id"
-        },
-        onDelete: "cascade",
-        onUpdate: "cascade"
+        type: Sequelize.STRING,
+        // references: {
+        //   model: "Users",
+        //   key: "id"
+        // },
+        // onDelete: "cascade",
+        // onUpdate: "cascade"
       },
       categoryId: {
         type: Sequelize.INTEGER,

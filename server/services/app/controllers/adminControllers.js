@@ -58,11 +58,12 @@ class AdminController {
         include: [
           { model: Ingredients, order: [["id", "ASC"]] },
           { model: Category },
-          { model: User, attributes: ["id", "username", "email"] },
+          // { model: User, attributes: ["id", "username", "email"] },
         ],
       });
       res.status(200).json(data);
     } catch (error) {
+      console.log(error)
       next(error);
     }
   }
@@ -71,11 +72,15 @@ class AdminController {
     const t = await sequelize.transaction();
 
     try {
-      const authorId = +req.user.id;
-
-      let { name, description, price, imgUrl, categoryId, ingredients } =
-        req.body;
-
+      let {
+        name,
+        description,
+        price,
+        imgUrl,
+        authorId,
+        categoryId,
+        ingredients,
+      } = req.body.data;
       const newItem = await Item.create(
         {
           name,
@@ -87,7 +92,6 @@ class AdminController {
         },
         { transaction: t }
       );
-
       ingredients = ingredients.map((item) => {
         item.itemId = newItem.id;
         return item;
@@ -106,40 +110,25 @@ class AdminController {
   }
 
   static async edit(req, res, next) {
-    const t = await sequelize.transaction();
     try {
-      const { authorId } = +req.params;
-      let { id, name, description, price, imgUrl, categoryId, ingredients } =
-        req.body;
+      let { id, name, description, price, imgUrl, authorId, categoryId } = req.body;
       await Item.update(
         {
           name,
           description,
           price,
-          imgUrl,
-          authorId,
+          imgUrl,        
+          authorId,  
           categoryId,
         },
         {
           where: { id },
-          transaction: t,
         }
       );
 
-      ingredients = ingredients.map((el) => {
-        return { itemId: id, name: el.name };
-      });
-
-      await Ingredients.bulkCreate(ingredients, {
-        updateOnDuplicate: ["itemId", "name"],
-        transaction: t,
-      });
-
-      t.commit();
-
       res.status(200).json("Update Success");
     } catch (error) {
-      t.rollback();
+      c
       next(error);
     }
   }
@@ -147,7 +136,11 @@ class AdminController {
   static async itemById(req, res, next) {
     try {
       const { id } = req.params;
-      const findItem = await Item.findByPk(id);
+      const findItem = await Item.findByPk(id, {
+        include: {
+          model: Ingredients,
+        },
+      });
       if (!findItem) {
         throw { name: "Data not found" };
       }
@@ -203,14 +196,14 @@ class AdminController {
     }
   }
 
-  static async createCategories(req, res, next){
+  static async createCategories(req, res, next) {
     try {
-      const { name } = req.body
-      const response = await Category.create({name})
-      res.status(201).json(response)
+      const { name } = req.body;
+      const response = await Category.create({ name });
+      res.status(201).json(response);
     } catch (error) {
-      console.log(error)
-      next(error)
+      console.log(error);
+      next(error);
     }
   }
 }
