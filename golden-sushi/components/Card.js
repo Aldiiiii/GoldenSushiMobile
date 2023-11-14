@@ -5,7 +5,7 @@ export default function Card({item}) {
     const navigation = useNavigation()
   return (
     <>
-    <Pressable onPress={() => navigation.navigate('Detail')}>
+    <Pressable onPress={() => navigation.navigate('Detail', {id: item.id})}>
       <View style={style.card}>
         <View style={style.cardContent}>
           <Image
