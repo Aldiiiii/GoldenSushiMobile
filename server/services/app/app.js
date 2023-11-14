@@ -21,7 +21,7 @@ app.use((err, req, res, next) => {
     if(err.name === "SequelizeValidationError"){
         code = 400
         message = err.errors[0].message
-    }else if(err.name === "Email/password is required" || err.name === "Email/password is invalid"){
+    }else if(err.name === "Email/password is required" || err.name === "Email/password is invalid" || err.name === "Update failed"){
         code = 400
         message = err.name
     } else if( err.name === "Invalid token"){

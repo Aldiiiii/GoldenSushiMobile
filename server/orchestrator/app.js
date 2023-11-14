@@ -48,6 +48,11 @@ const typeDefs = `#graphql
         updatedAt: String
     }
 
+    type Category {
+      id: ID
+      name: String
+    }
+
     type DetailItem {
         id: ID
         name: String
@@ -60,6 +65,7 @@ const typeDefs = `#graphql
         updatedAt: String
         Ingredients: [IngredientItem]
         User: User
+        Category: Category
     }
 
     type Query {
@@ -67,6 +73,7 @@ const typeDefs = `#graphql
         items: [Item]
         detailItem(id:ID!): DetailItem
         userById(_id: String): UserById
+        Categories:Category
     }
 
     type SuccessMessage {
@@ -149,22 +156,12 @@ const resolvers = {
     },
     detailItem: async (_, args) => {
       try {
-        const cache = await redis.get("itemDetail");
-        if (cache) {
-          console.log("Cache is true");
-          const data = JSON.parse(cache);
-          return data;
-        } else {
-          const id = args.id;
-          const { data } = await axios.get(APP_SERVICE_URL + "/items/" + id);
-          const author = await axios.get(
-            USER_SERVICE_URL + "/" + data.authorId
-          );
-          data.User = author.data;
-          const values = JSON.stringify(data);
-          await redis.set("itemDetail", values);
-          return data;
-        }
+        const id = args.id;
+        const { data } = await axios.get(APP_SERVICE_URL + "/items/" + id);
+        const author = await axios.get(USER_SERVICE_URL + "/" + data.authorId);
+        data.User = author.data;
+        const values = JSON.stringify(data);
+        return data;
       } catch (error) {
         console.log(error);
       }
@@ -213,7 +210,7 @@ const resolvers = {
         const { data } = await axios.delete(USER_SERVICE_URL + "/" + id);
         if (data.deletedCount === 1) {
           await redis.del("users");
-          await redis.del("userById")
+          await redis.del("userById");
           return { message: "Success Delete User" };
         } else {
           throw { message: "Failed Delete User" };
@@ -224,12 +221,14 @@ const resolvers = {
     },
     deleteItem: async (_, args) => {
       try {
-        const id = +args.id
-        const { data } = await axios.delete(APP_SERVICE_URL + '/items', {data: {id}})
+        const id = +args.id;
+        const { data } = await axios.delete(APP_SERVICE_URL + "/items", {
+          data: { id },
+        });
         if (data.id) {
           await redis.del("items");
           await redis.del("itemDetail");
-          return { message: `Success delete item ${data.name}`};
+          return { message: `Success delete item ${data.name}` };
         } else {
           throw { message: "Failed Delete Item" };
         }
@@ -239,27 +238,47 @@ const resolvers = {
     },
     createItem: async (_, args) => {
       try {
-        console.log(args, `<<<<<<<< INI DATA BRO`)
-        const { name, description, price, imgUrl, authorId, categoryId, ingredients } = args
-        const {data} = await axios.post(APP_SERVICE_URL + '/items', {data: {
-          name, description, price, imgUrl, authorId, categoryId, ingredients
-        }})
-        await redis.del("items")
-        return { message: `Create success item ${data.item.name}`}
+        const {
+          name,
+          description,
+          price,
+          imgUrl,
+          authorId,
+          categoryId,
+          ingredients,
+        } = args;
+        const { data } = await axios.post(APP_SERVICE_URL + "/items", {
+          data: {
+            name,
+            description,
+            price,
+            imgUrl,
+            authorId,
+            categoryId,
+            ingredients,
+          },
+        });
+        await redis.del("items");
+        return { message: `Create success item ${data.item.name}` };
       } catch (error) {
         console.log(error);
       }
     },
     updateItem: async (_, args) => {
       try {
-        const { id, name, description, price, imgUrl, authorId, categoryId } = args
-        console.log({ id, name, description, price, imgUrl, authorId, categoryId })
-        await axios.put(APP_SERVICE_URL + "/" + id, {
-          data: {id, name, description, price, imgUrl, authorId, categoryId}
-        })
-
-        await redis.del("items")
-        return { message: "Success Update Item"}
+        const { id, name, description, price, imgUrl, authorId, categoryId } =
+          args;
+        await axios.put(APP_SERVICE_URL + "/items/" + id, {
+          id,
+          name,
+          description,
+          price,
+          imgUrl,
+          authorId,
+          categoryId,
+        });
+        await redis.del("items");
+        return { message: "Success Update Item" };
       } catch (error) {
         console.log(error);
       }

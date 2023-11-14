@@ -112,7 +112,8 @@ class AdminController {
   static async edit(req, res, next) {
     try {
       let { id, name, description, price, imgUrl, authorId, categoryId } = req.body;
-      await Item.update(
+      console.log({id, name, description, price, imgUrl, authorId, categoryId})
+      const response = await Item.update(
         {
           name,
           description,
@@ -125,10 +126,12 @@ class AdminController {
           where: { id },
         }
       );
-
+      if(response[0] === 0){
+        throw {name: "Update failed"}
+      }
       res.status(200).json("Update Success");
     } catch (error) {
-      c
+      console.log(error)
       next(error);
     }
   }
@@ -137,9 +140,14 @@ class AdminController {
     try {
       const { id } = req.params;
       const findItem = await Item.findByPk(id, {
-        include: {
-          model: Ingredients,
-        },
+        include: [
+          {
+            model: Ingredients,
+          },
+          {
+            model: Category
+          }
+        ],
       });
       if (!findItem) {
         throw { name: "Data not found" };

@@ -1,0 +1,21 @@
+services:
+  orchestrator:
+    build: ./orchestrator
+    ports:
+      - "3000:4000"
+    environment:
+      - USER_SERVICE_URL=http://user:4001
+      - APP_SERVICE_URL=http://app:4002
+      - REDIS_URL=redis://default:ehOuoUqUpc8Fb4UK64i307b0uMg2E2A3@redis-17626.c252.ap-southeast-1-1.ec2.cloud.redislabs.com:17626
+  app:
+    build: ./services/app
+    ports:
+      - "3002:4002"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+  user:
+    build: ./services/users
+    ports:
+      - "3001:4001"
+    environment:
+      - URL_MONGO=${URL_MONGO}

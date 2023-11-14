@@ -3,15 +3,26 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
 import MainTab from "./navigators/MainTab";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  
+} from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://bb00-103-165-209-194.ngrok-free.app",
+  cache: new InMemoryCache(),
+});
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-
-      <MainTab/>
-      
-    </NavigationContainer>
+    <ApolloProvider client={client}>
+      <NavigationContainer>
+        <MainTab />
+      </NavigationContainer>
+    </ApolloProvider>
   );
 }
